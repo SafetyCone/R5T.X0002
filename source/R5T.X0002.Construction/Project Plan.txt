@@ -1,0 +1,3 @@
+R5T.X0002.Construction - Construction project for Add project reference and all dependencies to project and enclosing solutions. (Virconium functionality).
+
+GOALS:
