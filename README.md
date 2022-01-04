@@ -1,0 +1,2 @@
+# R5T.X0002
+Add project reference and all dependencies to project and enclosing solutions. (Virconium functionality)
