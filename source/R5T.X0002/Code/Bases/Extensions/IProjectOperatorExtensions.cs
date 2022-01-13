@@ -57,7 +57,7 @@ namespace System
                 stringlyTypedPathOperator,
                 visualStudioSolutionFileOperator);
 
-            await Instances.SolutionOperator.UpdateSolutionsToIncludeProjectReferences(
+            await Instances.SolutionOperator.AddProjectReferences(
                 solutionFilePaths,
                 allProjectReferencesToAdd,
                 stringlyTypedPathOperator,

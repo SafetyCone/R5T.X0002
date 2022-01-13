@@ -6,13 +6,35 @@ using System.Threading.Tasks;
 using R5T.Lombardy;
 
 using R5T.D0078;
+using R5T.D0083;
 using R5T.T0113;
+
+using Instances = R5T.X0002.Instances;
 
 
 namespace System
 {
     public static class ISolutionOperatorExtensions
     {
+        public static async Task AddProjectReferencesAndRecursiveDependencies(this ISolutionOperator _,
+            string solutionFilePath,
+            IEnumerable<string> projectReferenceFilePaths,
+            IStringlyTypedPathOperator stringlyTypedPathOperator,
+            IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
+            IVisualStudioSolutionFileOperator visualStudioSolutionFileOperator)
+        {
+            // Get all recursive project references to add. Order alphabetically and evaluate now to aide in debugging.
+            var allProjectReferenceFilePaths = await Instances.ProjectOperator.GetAllRecursiveProjectReferencesInclusive(
+                projectReferenceFilePaths,
+                visualStudioProjectFileReferencesProvider);
+
+            await _.AddProjectReferences(
+                EnumerableHelper.From(solutionFilePath),
+                allProjectReferenceFilePaths,
+                stringlyTypedPathOperator,
+                visualStudioSolutionFileOperator);
+        }
+
         public static async Task<string[]> GetSolutionFilePathsContainingProject(this ISolutionOperator _,
             IEnumerable<string> solutionFilePaths,
             string projectFilePath,
@@ -37,7 +59,7 @@ namespace System
             return outputSolutionFilePaths.ToArray();
         }
 
-        public static async Task UpdateSolutionsToIncludeProjectReferences(this ISolutionOperator _,
+        public static async Task AddProjectReferences(this ISolutionOperator _,
             IEnumerable<string> solutionFilePaths,
             IList<string> projectFilePaths,
             IStringlyTypedPathOperator stringlyTypedPathOperator,
