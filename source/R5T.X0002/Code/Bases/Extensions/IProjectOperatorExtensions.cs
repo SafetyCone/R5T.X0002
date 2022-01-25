@@ -88,6 +88,17 @@ namespace System
             return output;
         }
 
+        public static async Task<string[]> GetAllRecursiveProjectReferencesInclusive(this IProjectOperator _,
+            string projectFilePath,
+            IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider)
+        {
+            var output = await _.GetAllRecursiveProjectReferencesInclusive(
+                EnumerableHelper.From(projectFilePath),
+                visualStudioProjectFileReferencesProvider);
+
+            return output;
+        }
+
         public static async Task<string[]> GetFilePathsForProjectIdentities(this IProjectOperator _,
             IEnumerable<Guid> projectIdentities,
             IProjectRepository projectRepository)
