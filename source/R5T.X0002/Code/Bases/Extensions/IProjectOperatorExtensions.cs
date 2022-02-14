@@ -47,12 +47,9 @@ namespace System
                 visualStudioProjectFileReferencesProvider);
 
             // Get all solution files in parent directories of the project to modify.
-            var allSolutionFilePaths = Instances.FileSystemOperator.FindSolutionFilesInFileDirectoryOrDirectParentDirectories(
-                projectToModifyFilePath);
 
             // Get all solution files that contain a reference to the project to modify (are of interest).
             var solutionFilePaths = await Instances.SolutionOperator.GetSolutionFilePathsContainingProject(
-                allSolutionFilePaths,
                 projectToModifyFilePath,
                 stringlyTypedPathOperator,
                 visualStudioSolutionFileOperator);

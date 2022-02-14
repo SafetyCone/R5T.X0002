@@ -36,6 +36,23 @@ namespace System
         }
 
         public static async Task<string[]> GetSolutionFilePathsContainingProject(this ISolutionOperator _,
+            string projectFilePath,
+            IStringlyTypedPathOperator stringlyTypedPathOperator,
+            IVisualStudioSolutionFileOperator visualStudioSolutionFileOperator)
+        {
+            var solutionFilePaths = Instances.FileSystemOperator.FindSolutionFilesInFileDirectoryOrDirectParentDirectories(
+                projectFilePath);
+
+            var output = await _.GetSolutionFilePathsContainingProject(
+                solutionFilePaths,
+                projectFilePath,
+                stringlyTypedPathOperator,
+                visualStudioSolutionFileOperator);
+
+            return output;
+        }
+
+        public static async Task<string[]> GetSolutionFilePathsContainingProject(this ISolutionOperator _,
             IEnumerable<string> solutionFilePaths,
             string projectFilePath,
             IStringlyTypedPathOperator stringlyTypedPathOperator,
