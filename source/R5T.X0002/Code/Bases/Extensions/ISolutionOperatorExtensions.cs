@@ -16,7 +16,7 @@ namespace System
 {
     public static class ISolutionOperatorExtensions
     {
-        public static async Task AddProjectReferencesAndRecursiveDependencies(this ISolutionOperator _,
+        public static async Task AddDependencyProjectReferencesAndRecursiveDependencies(this ISolutionOperator _,
             string solutionFilePath,
             IEnumerable<string> projectReferenceFilePaths,
             IStringlyTypedPathOperator stringlyTypedPathOperator,
@@ -28,7 +28,7 @@ namespace System
                 projectReferenceFilePaths,
                 visualStudioProjectFileReferencesProvider);
 
-            await _.AddProjectReferences(
+            await _.AddDependencyProjectReferences(
                 EnumerableHelper.From(solutionFilePath),
                 allProjectReferenceFilePaths,
                 stringlyTypedPathOperator,
@@ -76,7 +76,7 @@ namespace System
             return outputSolutionFilePaths.ToArray();
         }
 
-        public static async Task AddProjectReferences(this ISolutionOperator _,
+        public static async Task AddDependencyProjectReferences(this ISolutionOperator _,
             IEnumerable<string> solutionFilePaths,
             IList<string> projectFilePaths,
             IStringlyTypedPathOperator stringlyTypedPathOperator,

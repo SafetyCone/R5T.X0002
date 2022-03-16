@@ -54,7 +54,7 @@ namespace System
                 stringlyTypedPathOperator,
                 visualStudioSolutionFileOperator);
 
-            await Instances.SolutionOperator.AddProjectReferences(
+            await Instances.SolutionOperator.AddDependencyProjectReferences(
                 solutionFilePaths,
                 allProjectReferencesToAdd,
                 stringlyTypedPathOperator,
@@ -106,6 +106,17 @@ namespace System
             return output;
         }
 
+        public static async Task<string> GetFilePathForProjectIdentity(this IProjectOperator _,
+            Guid projectIdentity,
+            IProjectRepository projectRepository)
+        {
+            var projectFilePathsByIdentity = await projectRepository.GetProjectFilePaths(
+                EnumerableHelper.From(projectIdentity));
+
+            var output = projectFilePathsByIdentity.Values.Single();
+            return output;
+        }
+
         public static async Task<string[]> GetFilePathsForProjectIdentityStrings(this IProjectOperator _,
             IEnumerable<string> projectIdentityStrings,
             IProjectRepository projectRepository)
@@ -114,6 +125,19 @@ namespace System
 
             var output = await _.GetFilePathsForProjectIdentities(
                 projectIdentities,
+                projectRepository);
+
+            return output;
+        }
+
+        public static async Task<string> GetFilePathForProjectIdentityString(this IProjectOperator _,
+            string projectIdentityString,
+            IProjectRepository projectRepository)
+        {
+            var projectIdentity = _.GetProjectIdentity(projectIdentityString);
+
+            var output = await _.GetFilePathForProjectIdentity(
+                projectIdentity,
                 projectRepository);
 
             return output;
