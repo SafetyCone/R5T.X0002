@@ -96,16 +96,6 @@ namespace System
             return output;
         }
 
-        public static async Task<string[]> GetFilePathsForProjectIdentities(this IProjectOperator _,
-            IEnumerable<Guid> projectIdentities,
-            IProjectRepository projectRepository)
-        {
-            var projectFilePathsByIdentity = await projectRepository.GetProjectFilePaths(projectIdentities);
-
-            var output = projectFilePathsByIdentity.Values.ToArray();
-            return output;
-        }
-
         public static async Task<string> GetFilePathForProjectIdentity(this IProjectOperator _,
             Guid projectIdentity,
             IProjectRepository projectRepository)
@@ -123,9 +113,8 @@ namespace System
         {
             var projectIdentities = _.GetProjectIdentities(projectIdentityStrings);
 
-            var output = await _.GetFilePathsForProjectIdentities(
-                projectIdentities,
-                projectRepository);
+            var output = await projectRepository.GetFilePathsForProjectIdentities(
+                projectIdentities);
 
             return output;
         }

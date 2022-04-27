@@ -35,6 +35,24 @@ namespace System
                 visualStudioSolutionFileOperator);
         }
 
+        public static Task AddDependencyProjectReferenceAndRecursiveDependencies(this ISolutionOperator _,
+            string solutionFilePath,
+            string referenceProjectFilePath,
+            IStringlyTypedPathOperator stringlyTypedPathOperator,
+            IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
+            IVisualStudioSolutionFileOperator visualStudioSolutionFileOperator)
+        {
+            return _.AddDependencyProjectReferencesAndRecursiveDependencies(
+                solutionFilePath,
+                EnumerableHelper.From(referenceProjectFilePath),
+                stringlyTypedPathOperator,
+                visualStudioProjectFileReferencesProvider,
+                visualStudioSolutionFileOperator);
+        }
+
+        /// <summary>
+        /// Finds solution files in the project's directory or parent directories, that are then tested for whether they contain the project file.
+        /// </summary>
         public static async Task<string[]> GetSolutionFilePathsContainingProject(this ISolutionOperator _,
             string projectFilePath,
             IStringlyTypedPathOperator stringlyTypedPathOperator,
