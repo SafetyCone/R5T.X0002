@@ -71,7 +71,7 @@ namespace System
             {
                 // Get all project references, recursively, inclusively of the project reference to add.
                 // Use inclusive, to ensure the actually specified project reference (and not just its dependencies) get added.
-                var projectReferencesToAdd = await visualStudioProjectFileReferencesProvider.GetAllRecursiveProjectReferenceDependenciesInclusive(
+                var projectReferencesToAdd = await visualStudioProjectFileReferencesProvider.GetAllRecursiveProjectReferenceDependencies_Inclusive(
                     projectFilePath);
 
                 projectFilePathsHash.AddRange(projectReferencesToAdd);
